@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Data;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -82,6 +83,7 @@ namespace Shmuelie.FreeRangeWindows
                 {
                     ActivityLog.LogInformation(nameof(FreeRangeWindows), "Making " + window.Title + " free range");
                     window.ShowInTaskbar = true;
+                    BindingOperations.SetBinding(window, Window.TitleProperty, new Binding("DataContext.Child.SelectedElement.Title.Title") { Source = window });
                 }
             }
         }
