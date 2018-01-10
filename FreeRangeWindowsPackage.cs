@@ -63,7 +63,12 @@ namespace Shmuelie.FreeRangeWindows
 
         private static void BindTitle(Window window, View view)
         {
-            string mainTitle = Application.Current.MainWindow.Title;
+            Window mainWindow = Application.Current.MainWindow;
+            if (window == mainWindow)
+            {
+                return;
+            }
+            string mainTitle = mainWindow.Title;
             window.SetBinding(Window.TitleProperty, new Binding("Title")
             {
                 FallbackValue = mainTitle,
