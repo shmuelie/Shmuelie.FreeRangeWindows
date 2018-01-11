@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="appveyor.yml" />
+    <None Include="CHANGELOG.md" />
     <None Include="Key.snk" />
     <Content Include="LICENSE">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

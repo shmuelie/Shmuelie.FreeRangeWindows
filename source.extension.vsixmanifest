@@ -7,7 +7,7 @@
         <MoreInfo>https://github.com/SamuelEnglard/Shmuelie.FreeRangeWindows</MoreInfo>
         <License>LICENSE</License>
         <GettingStartedGuide>https://github.com/SamuelEnglard/Shmuelie.FreeRangeWindows</GettingStartedGuide>
-        <ReleaseNotes>https://github.com/SamuelEnglard/Shmuelie.FreeRangeWindows</ReleaseNotes>
+        <ReleaseNotes>CHANGELOG.md</ReleaseNotes>
         <Icon>Resources\FreeRangeWindowsPackage.ico</Icon>
         <PreviewImage>Resources\FreeRangeWindowsPackagePreview.jpg</PreviewImage>
         <Tags>Windows, Tools</Tags>
