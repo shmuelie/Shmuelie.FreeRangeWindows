@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Data;
@@ -22,6 +23,8 @@ namespace Shmuelie.FreeRangeWindows
         /// FreeRangeWindowsPackage GUID string.
         /// </summary>
         public const string PackageGuidString = "214337a7-2957-45e5-b42e-b8cf91cbe11f";
+
+        private static readonly PriorityMultiValueConverter priorityMultiValueConverter = new PriorityMultiValueConverter();
 
         protected override void Initialize()
         {
@@ -49,12 +52,10 @@ namespace Shmuelie.FreeRangeWindows
                 {
                     void isVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
                     {
-                        UIElement element = (UIElement)sender;
                         if ((bool)args.NewValue)
                         {
-                            BindTitle(Window.GetWindow(element), view);
+                            BindTitle(Window.GetWindow((UIElement)sender), view);
                         }
-                        element.IsVisibleChanged -= isVisibleChanged;
                     }
                     content.IsVisibleChanged += isVisibleChanged;
                 }
@@ -68,14 +69,47 @@ namespace Shmuelie.FreeRangeWindows
             {
                 return;
             }
-            string mainTitle = mainWindow.Title;
-            window.SetBinding(Window.TitleProperty, new Binding("Title")
+            Binding mainTitle = new Binding("Title")
             {
-                FallbackValue = mainTitle,
                 Mode = BindingMode.OneWay,
-                StringFormat = mainTitle + " - {0}",
+                Source = mainWindow
+            };
+            Binding simpleViewTitle = new Binding("Title")
+            {
+                Mode = BindingMode.OneWay,
                 Source = view
-            });
+            };
+            Binding complexViewTitle = new Binding("Title.Title")
+            {
+                Mode = BindingMode.OneWay,
+                Source = view
+            };
+
+            window.SetBinding(Window.TitleProperty, new MultiBinding() { Bindings = { mainTitle, complexViewTitle, simpleViewTitle }, Converter = priorityMultiValueConverter, Mode = BindingMode.OneWay });
+        }
+
+        private sealed class PriorityMultiValueConverter : IMultiValueConverter
+        {
+            object IMultiValueConverter.Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+            {
+                if (values == null)
+                {
+                    throw new ArgumentNullException(nameof(values));
+                }
+                // Treat first as special
+                string prefix = values[0].ToString();
+                for (int i = 1; i < values.Length; i++)
+                {
+                    object value = values[i];
+                    if (value != null && value != DependencyProperty.UnsetValue)
+                    {
+                        return string.Concat(prefix, " - ", value);
+                    }
+                }
+                return prefix;
+            }
+
+            object[] IMultiValueConverter.ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => null;
         }
 
 #pragma warning disable U2U1003 // Avoid declaring methods used in delegate constructors static
