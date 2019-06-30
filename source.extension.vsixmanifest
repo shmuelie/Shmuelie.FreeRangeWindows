@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="Shmuelie.FreeRangeWindows.8d60c8e1-5140-44cc-a2c9-63d79af6473c" Version="1.2" Language="en-US" Publisher="Shmueli Englard" />
+        <Identity Id="Shmuelie.FreeRangeWindows.8d60c8e1-5140-44cc-a2c9-63d79af6473c" Version="1.3" Language="en-US" Publisher="Shmueli Englard" />
         <DisplayName>Free Range Windows</DisplayName>
         <Description xml:space="preserve">Free your tool windows! Windows will now be independent of each other!</Description>
         <MoreInfo>https://github.com/SamuelEnglard/Shmuelie.FreeRangeWindows</MoreInfo>
@@ -16,7 +16,7 @@
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0,)" />
     </Installation>
     <Dependencies>
-        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
         <Dependency Id="Microsoft.VisualStudio.MPF.15.0" DisplayName="Visual Studio MPF 15.0" d:Source="Installed" Version="[15.0]" />
     </Dependencies>
     <Prerequisites>

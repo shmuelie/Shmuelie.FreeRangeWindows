@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using Microsoft.VisualStudio.Platform.WindowManagement;
@@ -11,13 +12,13 @@ using Microsoft.VisualStudio.Shell.Interop;
 
 namespace Shmuelie.FreeRangeWindows
 {
-    [ProvideAutoLoad(UIContextGuids80.NoSolution)]
-    [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
-    [PackageRegistration(UseManagedResourcesOnly = true)]
+    [ProvideAutoLoad(UIContextGuids80.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [Guid(FreeRangeWindowsPackage.PackageGuidString)]
     [CLSCompliant(false)]
-    public sealed class FreeRangeWindowsPackage : Package
+    public sealed class FreeRangeWindowsPackage : AsyncPackage
     {
         /// <summary>
         /// FreeRangeWindowsPackage GUID string.
@@ -26,9 +27,13 @@ namespace Shmuelie.FreeRangeWindows
 
         private static readonly PriorityMultiValueConverter priorityMultiValueConverter = new PriorityMultiValueConverter();
 
-        protected override void Initialize()
+        protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            base.Initialize();
+            await base.InitializeAsync(cancellationToken, progress);
+            if (cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
             ActivityLog.LogInformation(nameof(FreeRangeWindows), "Registering for FloatingWindow changes");
             UIElement.VisibilityProperty.OverrideMetadata(typeof(FloatingWindow), new FrameworkPropertyMetadata(Visibility.Collapsed, FloatingWindowVisibilityChanged));
             ViewElement.IsSelectedProperty.OverrideMetadata(typeof(View), new PropertyMetadata(false, ViewElementBooleanDependencyPropertyChanged));

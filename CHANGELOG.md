@@ -1,6 +1,11 @@
 ﻿Change Log
 ==========
 
+# Version 1.3.0
+
+* Updated to use SDK style projects.
+* Package now loads asynchronously.
+
 # Version 1.2.8
 
 * Bug fix to remove changing main windows title.
