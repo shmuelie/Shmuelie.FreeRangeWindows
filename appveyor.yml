@@ -4,7 +4,6 @@ install:
 before_build:
   - ps: Vsix-IncrementVsixVersion | Vsix-UpdateBuildVersion
 build_script:
-  - nuget restore -Verbosity quiet -PackagesDirectory .\packages
-  - msbuild /p:configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m /p:SolutionDir=.\
+  - dotnet build --configuration=Release /p:DeployExtension=false /p:ZipPackageCompressionLevel=normal /v:m /p:SolutionDir=.\
 after_test:
   - ps: Vsix-PushArtifacts | Vsix-PublishToGallery
