@@ -1,7 +1,7 @@
 ﻿Change Log
 ==========
 
-# Version 1.3.0
+# Version 1.3
 
 * Updated to use SDK style projects.
 * Package now loads asynchronously.
