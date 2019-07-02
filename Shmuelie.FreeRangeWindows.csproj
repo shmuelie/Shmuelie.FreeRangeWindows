@@ -33,6 +33,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>Windows, Tools</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/SamuelEnglard/Shmuelie.FreeRangeWindows/master/Resources/FreeRangeWindowsPackage256.png</PackageIconUrl>
+    <DevEnvDir Condition="'$(DevEnvDir)' == ''">$(MSBuildExtensionsPath)\..\Common7\IDE</DevEnvDir>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
