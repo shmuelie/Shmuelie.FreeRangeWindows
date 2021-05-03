@@ -39,6 +39,13 @@ namespace Shmuelie.FreeRangeWindows
             ViewElement.IsSelectedProperty.OverrideMetadata(typeof(View), new PropertyMetadata(false, ViewElementBooleanDependencyPropertyChanged));
             ViewElement.IsSelectedProperty.OverrideMetadata(typeof(ToolWindowView), new PropertyMetadata(false, ViewElementBooleanDependencyPropertyChanged));
             View.IsActiveProperty.OverrideMetadata(typeof(ToolWindowView), new FrameworkPropertyMetadata(false, ViewElementBooleanDependencyPropertyChanged));
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is FloatingWindow floatingWindow)
+                {
+                    FloatingWindowVisibilityChanged(floatingWindow, new DependencyPropertyChangedEventArgs(UIElement.VisibilityProperty, null, Visibility.Visible));
+                }
+            }
         }
 
 #pragma warning disable U2U1003 // Avoid declaring methods used in delegate constructors static
